@@ -1,14 +1,21 @@
 # Chapterloom landing page
 
-Static HTML, CSS, and JavaScript. No install or build step.
+Static HTML and CSS with four rendered app screens. No install or build step.
 
 ## Preview
 
 Run `python3 -m http.server 4173 --directory site` from repository root, then open `http://localhost:4173`.
 
-## Video
+## Screenshots
 
-Place a short, silent H.264 MP4 screen recording of the actual Chapterloom app at `site/demo.mp4`. Page then displays native video controls and a poster image. Until file exists, page shows a clear preview message. Audiobook audio should be muted in recording.
+The images in `site/screenshots/` are generated from the real Chapterloom SwiftUI view with staged source, scan, review, and export states. The source and markers match the verified 10-minute test. They are app renders rather than captures of a live scan.
+
+To regenerate from repository root, run:
+
+```sh
+swiftc -parse-as-library Sources/Chapterloom/AppState.swift Sources/Chapterloom/ChapterEngine.swift Sources/Chapterloom/ChapterloomView.swift Scripts/render-screenshots.swift -o /tmp/chapterloom-render-screenshots
+/tmp/chapterloom-render-screenshots Samples/sunrise-first-10m.m4a site/screenshots
+```
 
 ## Manual Vercel deployment
 
@@ -17,4 +24,4 @@ Place a short, silent H.264 MP4 screen recording of the actual Chapterloom app a
 3. Set **Framework Preset** to **Other**. Leave **Build Command** empty.
 4. Deploy.
 
-Vercel serves `site/index.html` at site root. Keep `demo.mp4` inside `site/` so it deploys with page. Avoid committing source audiobook or excerpts.
+Vercel serves `site/index.html` at site root. Screenshot PNGs deploy with page. Avoid committing source audiobook or excerpts.

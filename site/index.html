@@ -18,7 +18,7 @@
       </a>
       <nav aria-label="Main navigation">
         <a href="#how-it-works">How it works</a>
-        <a class="nav-demo" href="#demo">See the demo <span aria-hidden="true">↗</span></a>
+        <a class="nav-demo" href="#demo">See the app <span aria-hidden="true">↗</span></a>
       </nav>
     </header>
 
@@ -29,7 +29,7 @@
           <h1 id="hero-title">Give every chapter<br />its own <em>beginning.</em></h1>
           <p>One long audio file. Dozens of spoken chapters. Chapterloom listens locally, finds the boundaries, and gives you the final say before saving a BookPlayer-ready M4B.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#demo">Watch the walkthrough <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="#demo">Explore the screenshots <span aria-hidden="true">↗</span></a>
             <a class="text-link" href="#how-it-works">Explore the workflow <span aria-hidden="true">↓</span></a>
           </div>
           <div class="hero-note"><span class="note-dot"></span> Your audiobook stays on your Mac</div>
@@ -54,22 +54,28 @@
           <span class="section-number">01 / IN ACTION</span>
           <div>
             <h2 id="demo-title">From one file to a shelf of chapters.</h2>
-            <p>See spoken headings turn into precise, editable markers.</p>
+            <p>Four moments from Chapterloom’s local workflow.</p>
           </div>
         </div>
-        <div class="video-shell" id="video-shell">
-          <div class="video-topbar" aria-hidden="true"><span></span><span></span><span></span><b>Chapterloom</b></div>
-          <video id="demo-video" controls playsinline preload="metadata" poster="./preview.svg" aria-label="Chapterloom audiobook chapter workflow">
-            <source src="./demo.mp4" type="video/mp4" />
-            Your browser does not support video playback.
-          </video>
-          <div class="video-fallback" id="video-fallback" role="status">
-            <span class="fallback-play" aria-hidden="true">▶</span>
-            <strong>Demo recording is being added.</strong>
-            <span>Preview of the app is shown behind this message.</span>
-          </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+            <div class="screenshot-frame"><img src="./screenshots/source.png" alt="Chapterloom with a ten-minute audiobook loaded and Find chapters ready" width="1040" height="900" /></div>
+            <figcaption><span>01 / LOAD</span><strong>Bring your audiobook in.</strong><p>Title, author, and duration appear beside the chapter finder.</p></figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <div class="screenshot-frame"><img src="./screenshots/scan.png" alt="Chapterloom scanning the audiobook locally with visible progress" width="1040" height="900" loading="lazy" /></div>
+            <figcaption><span>02 / LISTEN</span><strong>Find spoken chapters locally.</strong><p>Progress stays visible while the model listens.</p></figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <div class="screenshot-frame"><img src="./screenshots/review.png" alt="Two editable chapter markers at zero and one minute thirty-one seconds" width="1040" height="900" loading="lazy" /></div>
+            <figcaption><span>03 / REVIEW</span><strong>Shape every marker.</strong><p>Rename, preview, add, or adjust chapter boundaries.</p></figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <div class="screenshot-frame"><img src="./screenshots/export.png" alt="Chapterloom showing successful chaptered M4B export" width="1040" height="900" loading="lazy" /></div>
+            <figcaption><span>04 / EXPORT</span><strong>Save a chaptered M4B.</strong><p>Ready for your existing audiobook player.</p></figcaption>
+          </figure>
         </div>
-        <p class="demo-caption">A 10-minute excerpt of <cite>Sunrise on the Reaping</cite> was used to test chapter detection. Audio is not included on this page.</p>
+        <p class="demo-caption">Screens rendered from the app with the verified 10-minute <cite>Sunrise on the Reaping</cite> test data. No audiobook audio is included.</p>
       </section>
 
       <section class="workflow" id="how-it-works" aria-labelledby="workflow-title">
@@ -100,7 +106,7 @@
         <div class="closing-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <h2 id="closing-title">Keep the story.<br /><em>Find your place.</em></h2>
         <p>Chapterloom is a focused macOS utility for the audiobook library you already own.</p>
-        <a class="button button-light" href="#demo">See Chapterloom in action <span aria-hidden="true">↑</span></a>
+        <a class="button button-light" href="#demo">Explore the screenshots <span aria-hidden="true">↑</span></a>
       </section>
     </main>
 
@@ -108,6 +114,5 @@
       <a class="brand" href="#top"><img src="./mark.svg" alt="" width="28" height="28" /><span>Chapterloom</span></a>
       <span>Made for macOS · Built for listeners</span>
     </footer>
-    <script src="./site.js" defer></script>
   </body>
 </html>

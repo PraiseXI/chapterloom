@@ -32,7 +32,7 @@ Audio stays on the Mac. The initial model download goes to `~/Library/Applicatio
 
 ## Landing page
 
-Static landing page lives in [`site/`](site/). To deploy it manually on Vercel, import this repository, set **Root Directory** to `site`, and select **Other** as the framework preset. No build command is needed. Add a short, silent app walkthrough as `site/demo.mp4` before deploying; the page displays an honest preview state until that file exists.
+Static landing page lives in [`site/`](site/). It shows four screens rendered directly from the SwiftUI app using the verified 10-minute chapter data. To deploy it manually on Vercel, import this repository, set **Root Directory** to `site`, and select **Other** as the framework preset. No build command is needed.
 
 ## Development
 
