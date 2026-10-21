@@ -14,9 +14,17 @@ private enum Palette {
     static let amberPale = Color(red: 0.999, green: 0.947, blue: 0.877)
 }
 
+private struct MarkerEditorRequest: Identifiable {
+    let id = UUID()
+    let markerID: UUID?
+    let title: String
+    let timeText: String
+}
+
 struct ChapterloomView: View {
     @EnvironmentObject private var state: AppState
     @State private var isDropTargeted = false
+    @State private var markerEditor: MarkerEditorRequest?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -43,6 +51,14 @@ struct ChapterloomView: View {
             Button("OK", role: .cancel) { state.errorMessage = nil }
         } message: {
             Text(state.errorMessage ?? "")
+        }
+        .sheet(item: $markerEditor) { request in
+            MarkerEditorSheet(request: request, duration: state.duration) { title, time in
+                if let markerID = request.markerID {
+                    return state.updateMarker(markerID, start: time, title: title)
+                }
+                return state.addMarker(at: time, title: title)
+            }
         }
         .onDrop(of: [UTType.fileURL], isTargeted: $isDropTargeted) { providers in
             guard let provider = providers.first else { return false }
@@ -234,7 +250,9 @@ struct ChapterloomView: View {
 
             Rectangle().fill(Palette.line).frame(height: 1)
             HStack(spacing: 12) {
-                Button(action: state.addMarker) {
+                Button {
+                    markerEditor = MarkerEditorRequest(markerID: nil, title: "New chapter", timeText: "00:00.00")
+                } label: {
                     Label("Add marker", systemImage: "plus")
                 }
                 .buttonStyle(SecondaryButtonStyle())
@@ -317,10 +335,16 @@ struct ChapterloomView: View {
                 }
             }
             Spacer(minLength: 8)
-            Text(chapter.start.chapterTimecode)
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
-                .foregroundStyle(Palette.muted)
-                .frame(minWidth: 65, alignment: .trailing)
+            Button {
+                markerEditor = MarkerEditorRequest(markerID: chapter.id, title: chapter.title,
+                    timeText: chapter.start.preciseChapterTimecode)
+            } label: {
+                Text(chapter.start.chapterTimecode)
+                    .font(.system(size: 12, weight: .medium, design: .monospaced))
+                    .foregroundStyle(Palette.muted)
+                    .frame(minWidth: 65, alignment: .trailing)
+            }
+            .help("Edit exact chapter time")
             Button { state.nudge(chapter.id, by: -0.5) } label: {
                 Image(systemName: "minus").frame(width: 20, height: 20)
             }
@@ -400,6 +424,64 @@ struct ChapterloomView: View {
                     in: RoundedRectangle(cornerRadius: 7))
         }
         .buttonStyle(.plain)
+    }
+}
+
+private struct MarkerEditorSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var title: String
+    @State private var timeText: String
+    @State private var message: String?
+    let request: MarkerEditorRequest
+    let duration: TimeInterval
+    let onSave: (String, TimeInterval) -> Bool
+
+    init(request: MarkerEditorRequest, duration: TimeInterval,
+         onSave: @escaping (String, TimeInterval) -> Bool) {
+        self.request = request
+        self.duration = duration
+        self.onSave = onSave
+        _title = State(initialValue: request.title)
+        _timeText = State(initialValue: request.timeText)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Text(request.markerID == nil ? "Add chapter marker" : "Edit chapter marker")
+                .font(.system(size: 21, weight: .semibold, design: .rounded))
+                .foregroundStyle(Palette.ink)
+            Text("Set exact time and name. Book duration: \(duration.chapterTimecode).")
+                .font(.system(size: 12))
+                .foregroundStyle(Palette.muted)
+            TextField("Chapter name", text: $title)
+            TextField("Time · mm:ss or hh:mm:ss", text: $timeText)
+                .font(.system(size: 14, design: .monospaced))
+            if let message {
+                Text(message).font(.system(size: 12)).foregroundStyle(Palette.amber)
+            }
+            HStack {
+                Spacer()
+                Button("Cancel") { dismiss() }
+                Button("Save marker") { save() }
+                    .buttonStyle(PrimaryButtonStyle())
+                    .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(25)
+        .frame(width: 390)
+    }
+
+    private func save() {
+        guard let time = TimeInterval.fromChapterTimecode(timeText), time < duration,
+              !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            message = "Enter a name and time within the audiobook."
+            return
+        }
+        if onSave(title.trimmingCharacters(in: .whitespacesAndNewlines), time) {
+            dismiss()
+        } else {
+            message = "Choose a distinct time within the audiobook."
+        }
     }
 }
 

@@ -21,7 +21,7 @@ The build script creates and ad hoc signs `dist/Chapterloom.app`. Xcode is requi
 
 1. Choose or drop an M4A, M4B, or MP3 audiobook.
 2. Select **Entire book** or **First 30 min**, then **Find chapters**. The app transcribes 15 minute chunks locally and detects spoken chapter numbers and epilogue headings.
-3. Preview each marker, edit names, and move timing in half second steps. Add or remove markers as needed.
+3. Preview each marker, edit names, and move timing in half second steps. Click a timecode to enter an exact time. Add or remove markers as needed; new markers accept `mm:ss` or `hh:mm:ss`.
 4. Export M4B. The app writes an MP4 chapter track, sets its language to English for Apple media framework compatibility, and verifies chapter count.
 
 First 30 min limits chapter detection only; export still uses the full source book. For a short output, first make a short source clip with FFmpeg.

@@ -142,10 +142,33 @@ final class AppState: ObservableObject {
         status = "Cancelling scan"
     }
 
-    func addMarker() {
-        let time = max(0, min(player?.currentTime().seconds ?? 0, duration - 0.01))
-        chapters.append(ChapterMark(start: time, title: "New chapter", needsReview: true))
+    func addMarker(at time: TimeInterval, title: String) -> Bool {
+        guard markerTimeIsValid(time) else { return false }
+        chapters.append(ChapterMark(start: time, title: title, needsReview: false))
         chapters.sort { $0.start < $1.start }
+        return true
+    }
+
+    func updateMarker(_ id: UUID, start: TimeInterval, title: String) -> Bool {
+        guard markerTimeIsValid(start, except: id),
+              let index = chapters.firstIndex(where: { $0.id == id }) else { return false }
+        chapters[index].start = start
+        chapters[index].title = title
+        chapters[index].needsReview = false
+        chapters.sort { $0.start < $1.start }
+        return true
+    }
+
+    private func markerTimeIsValid(_ time: TimeInterval, except id: UUID? = nil) -> Bool {
+        guard time.isFinite, time >= 0, time < duration else {
+            errorMessage = "Marker time must fall within the audiobook."
+            return false
+        }
+        guard !chapters.contains(where: { $0.id != id && abs($0.start - time) < 0.001 }) else {
+            errorMessage = "A marker already exists at this time."
+            return false
+        }
+        return true
     }
 
     func removeMarker(_ id: UUID) {
@@ -220,6 +243,27 @@ final class AppState: ObservableObject {
 }
 
 extension TimeInterval {
+    static func fromChapterTimecode(_ value: String) -> TimeInterval? {
+        let parts = value.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: ":")
+        guard (1...3).contains(parts.count),
+              let seconds = Double(parts[parts.count - 1]), seconds >= 0,
+              seconds < (parts.count == 1 ? .infinity : 60) else { return nil }
+        if parts.count == 1 { return seconds }
+        guard let minutes = Int(parts[parts.count - 2]), minutes >= 0,
+              minutes < (parts.count == 2 ? .max : 60) else { return nil }
+        if parts.count == 2 { return Double(minutes * 60) + seconds }
+        guard let hours = Int(parts[0]), hours >= 0 else { return nil }
+        return Double(hours * 3600 + minutes * 60) + seconds
+    }
+
+    var preciseChapterTimecode: String {
+        let hours = Int(self) / 3600
+        let minutes = (Int(self) % 3600) / 60
+        let seconds = self.truncatingRemainder(dividingBy: 60)
+        return hours > 0 ? String(format: "%d:%02d:%05.2f", hours, minutes, seconds) :
+            String(format: "%02d:%05.2f", minutes, seconds)
+    }
+
     var chapterTimecode: String {
         guard isFinite else { return "00:00" }
         let total = Int(max(0, self))

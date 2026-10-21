@@ -25,6 +25,13 @@ final class ChapterEngineTests: XCTestCase {
         ], duration: 30))
     }
 
+    func testPreciseTimecodeParsing() {
+        XCTAssertEqual(TimeInterval.fromChapterTimecode("01:31.26"), 91.26)
+        XCTAssertEqual(TimeInterval.fromChapterTimecode("12:46:26.50"), 45_986.5)
+        XCTAssertNil(TimeInterval.fromChapterTimecode("01:70"))
+        XCTAssertNil(TimeInterval.fromChapterTimecode("-1"))
+    }
+
     func testExportEmbedsReadableChaptersAndKeepsAudio() throws {
         guard (try? Toolchain.path("ffmpeg")) != nil,
               (try? Toolchain.path("mp4track")) != nil else {
