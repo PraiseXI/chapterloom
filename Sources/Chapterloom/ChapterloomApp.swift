@@ -10,7 +10,6 @@ struct ChapterloomApp: App {
                 .environmentObject(state)
                 .frame(minWidth: 1040, minHeight: 700)
         }
-        .windowStyle(.hiddenTitleBar)
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("Open Audiobook…") { state.chooseSource() }

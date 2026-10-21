@@ -22,11 +22,15 @@ struct ChapterloomView: View {
         VStack(spacing: 0) {
             header
             HStack(alignment: .top, spacing: 24) {
-                sourceColumn
+                ScrollView {
+                    sourceColumn
+                }
+                .scrollIndicators(.hidden)
                     .frame(width: 336)
                 reviewColumn
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .frame(maxHeight: .infinity)
             .padding(28)
             footer
         }
