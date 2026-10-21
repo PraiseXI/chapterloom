@@ -192,8 +192,16 @@ final class ChapterEngine {
             _ = try runner.run("ffmpeg", ["-nostdin", "-hide_banner", "-loglevel", "error",
                 "-ss", String(start), "-t", String(length), "-i", source.path,
                 "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", "-y", wav.path])
-            _ = try runner.run("whisper-cli", ["-m", model.path, "-f", wav.path,
-                "-oj", "-of", stem.path, "-np"])
+            let whisperArguments = ["-m", model.path, "-f", wav.path,
+                "-oj", "-of", stem.path, "-np"]
+            do {
+                _ = try runner.run("whisper-cli", whisperArguments)
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                progress(Double(index) / Double(starts.count), "GPU unavailable · using CPU")
+                _ = try runner.run("whisper-cli", whisperArguments + ["-ng"])
+            }
             try? FileManager.default.removeItem(at: wav)
             let transcript = try JSONDecoder().decode(WhisperResult.self,
                 from: Data(contentsOf: stem.appendingPathExtension("json")))

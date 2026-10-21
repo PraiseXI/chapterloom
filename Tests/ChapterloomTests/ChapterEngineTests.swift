@@ -49,4 +49,26 @@ final class ChapterEngineTests: XCTestCase {
                        "Test Book")
         XCTAssertGreaterThan(try output.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0, 50_000)
     }
+
+    func testRealAudiobookExcerptWhenProvided() throws {
+        let environment = ProcessInfo.processInfo.environment
+        guard let samplePath = environment["CHAPTERLOOM_SAMPLE_PATH"],
+              let modelPath = environment["CHAPTERLOOM_MODEL_PATH"] else {
+            throw XCTSkip("Set sample and model paths for local audiobook integration test")
+        }
+        let source = URL(fileURLWithPath: samplePath)
+        let engine = ChapterEngine()
+        let marks = try engine.scan(
+            source: source, duration: 600, limit: nil,
+            model: URL(fileURLWithPath: modelPath), progress: { _, _ in }
+        )
+        XCTAssertTrue(marks.contains { $0.title.contains("Chapter 1") && abs($0.start - 91.26) < 30 },
+                      "Expected spoken Chapter 1 near 1:31; found \(marks)")
+        let output = FileManager.default.temporaryDirectory
+            .appendingPathComponent("Chapterloom-real-\(UUID().uuidString).m4b")
+        defer { try? FileManager.default.removeItem(at: output) }
+        try engine.export(source: source, output: output, chapters: marks, duration: 600)
+        XCTAssertEqual(AVURLAsset(url: output).chapterMetadataGroups(
+            bestMatchingPreferredLanguages: ["en"]).count, marks.count)
+    }
 }
