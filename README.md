@@ -30,6 +30,10 @@ First 30 min limits chapter detection only; export still uses the full source bo
 
 Audio stays on the Mac. The initial model download goes to `~/Library/Application Support/Chapterloom/Models`. `Samples/`, audio, model weights, and screen recordings are ignored by Git. Do not commit copyrighted audiobook files.
 
+## Landing page
+
+Static landing page lives in [`site/`](site/). To deploy it manually on Vercel, import this repository, set **Root Directory** to `site`, and select **Other** as the framework preset. No build command is needed. Add a short, silent app walkthrough as `site/demo.mp4` before deploying; the page displays an honest preview state until that file exists.
+
 ## Development
 
 ```sh

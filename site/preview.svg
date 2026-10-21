@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Illustration of Chapterloom with two detected audiobook chapters">
+  <rect width="1280" height="720" fill="#f6f8fd"/>
+  <rect y="0" width="1280" height="66" fill="#fff"/>
+  <path d="M0 66h1280" stroke="#dce3f0"/>
+  <rect x="36" y="18" width="31" height="31" rx="7" fill="#3156bd"/>
+  <path d="M45 38V29m5 13V25m5 17V25m5 13V29" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="80" y="39" fill="#1b2941" font-family="Arial,sans-serif" font-weight="700" font-size="18">Chapterloom</text>
+  <rect x="35" y="100" width="330" height="575" rx="16" fill="#fff" stroke="#dce3f0"/>
+  <text x="58" y="139" fill="#3156bd" font-family="Arial,sans-serif" font-weight="700" font-size="12" letter-spacing="3">SOURCE AUDIO</text>
+  <rect x="58" y="162" width="284" height="290" rx="12" fill="#233d91"/>
+  <path d="M162 315v-25m14 47v-69m14 84v-100m14 69v-38m14 81v-125m14 92v-55m14 63v-71m14 44v-18" fill="none" stroke="#cad6ff" stroke-width="5" stroke-linecap="round"/>
+  <text x="58" y="491" fill="#1b2941" font-family="Arial,sans-serif" font-size="20" font-weight="700">Sunrise on the Reaping</text>
+  <text x="58" y="519" fill="#6b7890" font-family="Arial,sans-serif" font-size="14">Suzanne Collins  ·  09:59</text>
+  <rect x="58" y="549" width="284" height="47" rx="8" fill="#3156bd"/>
+  <text x="131" y="578" fill="#fff" font-family="Arial,sans-serif" font-size="16" font-weight="700">Find chapters</text>
+  <rect x="391" y="100" width="854" height="575" rx="16" fill="#fff" stroke="#dce3f0"/>
+  <text x="422" y="140" fill="#3156bd" font-family="Arial,sans-serif" font-weight="700" font-size="12" letter-spacing="3">REVIEW &amp; EXPORT</text>
+  <text x="422" y="189" fill="#1b2941" font-family="Arial,sans-serif" font-size="34" font-weight="700">Chapters</text>
+  <text x="422" y="218" fill="#6b7890" font-family="Arial,sans-serif" font-size="15">Check markers, adjust timing, then save a BookPlayer-ready M4B.</text>
+  <path d="M391 246h854M391 350h854M391 448h854M391 606h854" stroke="#e2e7f0"/>
+  <rect x="422" y="272" width="43" height="43" rx="10" fill="#e8edfc"/>
+  <text x="433" y="300" fill="#3156bd" font-family="Arial,sans-serif" font-size="16" font-weight="700">01</text>
+  <text x="484" y="300" fill="#1b2941" font-family="Arial,sans-serif" font-size="19" font-weight="600">Epigraphs</text>
+  <text x="1090" y="300" fill="#6b7890" font-family="Arial,sans-serif" font-size="16">00:00</text>
+  <rect x="422" y="376" width="43" height="43" rx="10" fill="#e8edfc"/>
+  <text x="433" y="404" fill="#3156bd" font-family="Arial,sans-serif" font-size="16" font-weight="700">02</text>
+  <text x="484" y="404" fill="#1b2941" font-family="Arial,sans-serif" font-size="19" font-weight="600">Part I: The Birthday — Chapter 1</text>
+  <text x="1090" y="404" fill="#6b7890" font-family="Arial,sans-serif" font-size="16">01:31</text>
+  <rect x="1066" y="622" width="151" height="38" rx="9" fill="#3156bd"/>
+  <text x="1087" y="647" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">Export M4B</text>
+</svg>
