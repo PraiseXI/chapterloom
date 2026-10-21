@@ -1,0 +1,12 @@
+.build/
+dist/
+.DS_Store
+Samples/*
+!Samples/.gitkeep
+*.app/
+*.mov
+*.m4b
+*.m4a
+*.mp3
+*.wav
+*.bin
